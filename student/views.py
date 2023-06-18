@@ -44,6 +44,7 @@ def tial(clat, cout):
 def studlogin(request):
     if request.method == "POST":
         u, p = request.POST.get("email"), request.POST.get("password")
+        print(u, p)
         stud = Student.objects.filter(stud_id=u)
         if stud.exists():
             if stud.get().s_password == p:
@@ -65,7 +66,7 @@ def studprofile(request: HttpRequest, *args, **kwargs):
     stu = kwargs.get("pk")
     if request.method == "POST":
         try:
-            stud = Student.objects.filter(stud_id=stu)
+            stud = Student.objects.filter(stud_id=stu).first()
             form = modelform_factory(Student, fields="__all__")
             form.instance = stud
             if form.is_valid():
@@ -76,14 +77,14 @@ def studprofile(request: HttpRequest, *args, **kwargs):
 
         except Exception as ex:
             messages.error(request, f"Oops something went wrong! {ex}")
-            return redirect(reverse_lazy("studprofile", kwargs=kwargs))
+            return redirect(reverse_lazy("studprofile", kwargs={"pk": stu}))
     stud = Student.objects.filter(stud_id=stu).first()
     return render(request, "studprofile.html", {"stu": stud})
 
 
 def studindex(request, *args, **kwargs):
     stu = kwargs.get("pk")
-    dept = Department.objects.filter(dept_id=dep)
+    dept = Department.objects.filter(dept_id=dep).first()
     stud = Student.objects.filter(stud_id=stu).first()
     atte = Attendance.objects.all().filter(stud_id=stu).order_by("-date")
     cour, cou = [], []
@@ -113,7 +114,8 @@ def studindex(request, *args, **kwargs):
     for i in cou:
         if i[3] <= 75:
             coud.append(i)
-    return render(request, "studindex.html", {"stud": stud, "cou": coud})
+    print(stud)
+    return render(request, "studindex.html", context={"stud": stud, "cou": coud})
 
 
 def studadd(request: HttpRequest, *args, **kwargs):
@@ -159,20 +161,24 @@ def stud_report(request, *args, **kwargs):
     response["Content-Disposition"] = 'attachment; filename="AttendanceReport.csv"'
 
     stud = Student.objects.filter(stud_id=stu).first()
-    atte = Attendance.objects.filter(course_id=cou, stud_id=stu).order_by("fac_id", "date")
+    atte = Attendance.objects.filter(course_id=cou, stud_id=stu).order_by(
+        "fac_id", "date"
+    )
 
     writer = csv.writer(response)
     writer.writerow(["Fac-Id", "Class-Id", "Dept", "Course-Id", "Date", "Status"])
 
     for i in atte:
         status = "Present" if i.presence else "Absent"
-        writer.writerow([
-            i.fac_id.fac_id,
-            stud.class_id.class_id,
-            stud.dept_id.dept_id,
-            cou,
-            i.date,
-            status,
-        ])
+        writer.writerow(
+            [
+                i.fac_id.fac_id,
+                stud.class_id.class_id,
+                stud.dept_id.dept_id,
+                cou,
+                i.date,
+                status,
+            ]
+        )
 
     return response
