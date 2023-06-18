@@ -68,13 +68,13 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-		  <a class="nav-link active" href="{% url 'updatedindex'  %}">
+		  <a class="nav-link active" href="{% url 'updatedindex' fac.fac_id  %}">
               <span data-feather="home"></span>
               Home <span class="sr-only">(current)</span>
             </a>
           </li>
 		  <li class="nav-item">
-		  <a class="nav-link" href="{% url 'updatedprofile'  %}">
+		  <a class="nav-link" href="{% url 'updatedprofile' fac.fac_id  %}">
               <span data-feather="user"></span>
               Profile <span class="sr-only"></span>
             </a>
@@ -142,7 +142,7 @@
                <td>{{i.class_id.class_id}}</td>
                <td>{{i.course_id.course_id}}</td>
                <td>{{i.course_id.course_name}}</td>
-               <td><form action="{% url 'fac_report'  %}" method="POST">{% csrf_token %}<button type=submit name={{i.class_id.class_id}}${{i.course_id.course_id}} class="btn btn-success btn-sm"><span data-feather="download"></button></form></td>
+               <td><form action="{% url 'fac_report' fac.fac_id  %}" method="POST">{% csrf_token %}<button type=submit name={{i.class_id.class_id}}${{i.course_id.course_id}} class="btn btn-success btn-sm"><span data-feather="download"></button></form></td>
              </tr>
              {% endfor %}
 

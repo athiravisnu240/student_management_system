@@ -76,13 +76,13 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-		  <a class="nav-link" href="{% url 'updatedindex'  %}">
+		  <a class="nav-link" href="{% url 'updatedindex' fac.fac_id  %}">
               <span data-feather="home"></span>
               Home <span class="sr-only">(current)</span>
             </a>
           </li>
 		  <li class="nav-item">
-		  <a class="nav-link active" href="{% url 'updatedprofile'  %}">
+		  <a class="nav-link active" href="{% url 'updatedprofile' fac.fac_id  %}">
               <span data-feather="user"></span>
               Profile <span class="sr-only"></span>
             </a>
@@ -96,7 +96,7 @@
           <div class="collapse" id="collapseExample">
           <div class="card card-body">
           {% if clas%}
-          <form class="demo" action="{% url 'updatedadd'  %}" method="POST">
+          <form class="demo" action="{% url 'updatedadd' fac.fac_id  %}" method="POST">
           {% csrf_token %}
           <select name="classg">
           {% for i in clas %}

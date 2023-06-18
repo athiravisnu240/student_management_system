@@ -76,7 +76,7 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-		  <a class="nav-link" href="{% url 'studindex'  %}">
+		  <a class="nav-link" href="{% url 'studindex' stu.stud_id  %}">
               <span data-feather="home"></span>
               Home <span class="sr-only">(current)</span>
             </a>
@@ -88,7 +88,7 @@
             </a>
           </li>
           <li class="nav-item">
-          <a class="nav-link" href="{% url 'studadd'  %}">
+          <a class="nav-link" href="{% url 'studadd' stu.stud_id  %}">
                   <span data-feather="calendar"></span>
                   Attendance <span class="sr-only"></span>
                 </a>
