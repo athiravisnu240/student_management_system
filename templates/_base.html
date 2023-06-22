@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{% static 'bootstrap-5.2.3-dist/css/bootstrap.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'fontawesome-free-6.4.0-web/css/all.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>SMS | {% block page_name %}{% endblock %}</title>
+  </head>
+  <body>
+    <div id="root">{% block content %}{% endblock %}</div>
+    <script src="{% static 'bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'fontawesome-free-6.4.0-web/js/all.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+  </body>
+</html>

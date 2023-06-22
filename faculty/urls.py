@@ -1,12 +1,15 @@
-from django.urls import path,include
-from . import views
+from django.urls import path
 
+from faculty import views
+
+app_name = "faculty"
 
 urlpatterns = [
-    path("login/", views.faclogin, name='faclogin'),
-    path("<str:pk>/", views.updatedindex, name='updatedindex'),
-    path("profile/<str:pk>/", views.updatedprofile, name='updatedprofile'),
-    path("add/<str:pk>/", views.updatedadd, name='updatedadd'),
-    path("edit_attendance/<str:pk>/", views.editatt, name='editatt'),
-    path("report/<str:pk>/", views.fac_report, name='fac_report'),
+    # path('faclogin/', views.faclogin, name='faclogin'),
+    # path('updatedprofile/<str:pk>/', views.updatedprofile, name='updatedprofile'),
+    # path('editatt/<str:pk>/<str:course>/<str:class>/', views.editatt, name='editatt'),
+    # path('updatedindex/<str:pk>/<str:department>/', views.updatedindex, name='updatedindex'),
+    # path('updatedadd/<str:pk>/', views.updatedadd, name='updatedadd'),
+    # path('fac_report/<str:pk>/<str:clat>/<str:cout>/', views.fac_report, name='fac_report'),
+    path("<int:pk>/dashboard/", views.DashboardView.as_view(), name="dashboard"),
 ]

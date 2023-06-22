@@ -177,13 +177,13 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-		  <a class="nav-link" href="{% url 'updatedindex'  %}">
+		  <a class="nav-link" href="{% url 'updatedindex' fac.fac_id  %}">
               <span data-feather="home"></span>
               Home <span class="sr-only">(current)</span>
             </a>
           </li>
 		  <li class="nav-item">
-		  <a class="nav-link" href="{% url 'updatedprofile'  %}">
+		  <a class="nav-link" href="{% url 'updatedprofile' fac.fac_id %}">
               <span data-feather="user"></span>
               Profile <span class="sr-only"></span>
             </a>
@@ -198,7 +198,7 @@
     <div class="collapse" id="collapseExample">
     <div class="card card-body">
     {% if clas%}
-    <form class="demo" action="{% url 'updatedadd'  %}" method="POST">
+    <form class="demo" action="{% url 'updatedadd' fac.fac_id %}" method="POST">
     {% csrf_token %}
     <select name="classg">
     {% for i in clas %}
@@ -231,7 +231,7 @@
         <div class="col-md-3" Style="text-align:right">
           <button type="button" id="add_button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Add <span data-feather="plus-square"></button>
           <button type="button" id="edit_button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">Edit <span data-feather="edit"></button>
-          <form action="{% url 'fac_report'  %}" method="POST" style="display:inline;">{% csrf_token %}<button type=submit name={{clat.class_id}}${{cout.course_id}} class="btn btn-info btn-sm" style="display:inline;">Report <span data-feather="download"></button></form>
+          <form action="{% url 'fac_report' fac.fac_id  %}" method="POST" style="display:inline;">{% csrf_token %}<button type=submit name={{clat.class_id}}${{cout.course_id}} class="btn btn-info btn-sm" style="display:inline;">Report <span data-feather="download"></button></form>
         </div>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -301,7 +301,7 @@
         </button>
       </div>
   <div class="modal-body">
-  <form action="{% url 'editatt'  %}" method="post">
+  <form action="{% url 'editatt' fac.fac_id  %}" method="post">
     {% csrf_token %}
     <div class="modal-body">
   <div class="form-group row">

@@ -1,0 +1,53 @@
+{% extends "_base.html" %} {% load static %} {% block content %}
+<div class="d-flex flex-fill align-items-center justify-content-center">
+  <div class="container" id="container">
+    <div class="watermarked" id="cf2">
+      <img
+        src="{% static 'img/logo1.png' %}"
+        id="ER"
+        style="width: 46px; height: 46px"
+      />
+      <img
+        src="{% static 'img/logo2.png' %}"
+        id="ERL"
+        style="width: 46px; height: 46px; opacity: 0"
+      />
+    </div>
+    <div class="form-container sign-up-container">
+      <form action="">
+        <h4>Logged out successfully!</h4>
+      </form>
+    </div>
+
+    <div class="overlay-container" id="oVER">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>Focus on work that matters</p>
+          <div class="d-flex align-item-center gap-3">
+            <button class="custom-btn" id="signIn">Student</button>
+            <button class="custom-btn" id="next">Admin</button>
+          </div>
+          {% if messages %} {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message|safe }}</div>
+          {% endfor %} {% endif %}
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Welcome Back!</h1>
+          <p>Focus on work that matters</p>
+          <a
+            class="custom-btn btn btn-success rounded-pill"
+            href="{% url 'accounts:login' %}"
+            id="login-btn"
+            >Login</a
+          >
+          {% if messages %} {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message|safe }}</div>
+          {% endfor %} {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

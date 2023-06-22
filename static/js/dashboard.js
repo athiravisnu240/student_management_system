@@ -1,7 +1,5 @@
 (function () {
   'use strict'
-
-  feather.replace()
   var ctx = document.getElementById('myChart')
   var myChart = new Chart(ctx, {
     type: 'line',

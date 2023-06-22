@@ -1,0 +1,142 @@
+{% extends "_base.html" %} {% load static %} {% block content %}
+
+<div class="d-flex flex-fill align-items-center justify-content-center">
+  <div class="container" id="container">
+    <div class="watermarked" id="cf2">
+      <img
+        src="{% static 'img/logo1.png' %}"
+        id="ER"
+        style="width: 46px; height: 46px"
+      />
+      <img
+        src="{% static 'img/logo2.png' %}"
+        id="ERL"
+        style="width: 46px; height: 46px; opacity: 0"
+      />
+    </div>
+
+    <div class="overlay-container" id="overlayContainer">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>Focus on work that matters</p>
+          <div class="d-flex align-items-center gap-3">
+            <button class="custom-btn btn-primary" id="studentButton">
+              Student
+            </button>
+            <button class="custom-btn btn-primary" id="adminButton">
+              Admin
+            </button>
+          </div>
+          {% if messages %} {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message|safe }}</div>
+          {% endfor %} {% endif %}
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Welcome Back!</h1>
+          <p>Focus on work that matters</p>
+          <button class="custom-btn btn-primary" id="formToggleBtn">
+            Faculty
+          </button>
+          {% if messages %} {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message|safe }}</div>
+          {% endfor %} {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-container" id="formContainer">
+      <form
+        action="{#% url 'studlogin' %#}"
+        class="form-toggle d-flex"
+        method="POST"
+        id="studentForm"
+      >
+        <h1>STUDENT ACCOUNT</h1>
+        {% csrf_token %}
+        <input type="hidden" name="model" value="Student" />
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          placeholder="Student ID"
+          required
+          autofocus
+        />
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Password"
+          required
+        />
+        <a href="#">Forgot your password?</a>
+        <button type="submit" class="btn btn-primary btn-lg rounded-pill p-3">
+          SIGN IN
+        </button>
+      </form>
+
+      <form
+        action="{#% url 'faclogin' %#}"
+        method="POST"
+        class="form-toggle d-none"
+        id="facultyForm"
+      >
+        <h1>FACULTY ACCOUNT</h1>
+        {% csrf_token %}
+        <input type="hidden" name="model" value="Faculty" />
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          placeholder="Faculty ID"
+          required
+          autofocus
+        />
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Password"
+          required
+        />
+        <a href="#">Forgot your password?</a>
+        <button type="submit" class="btn btn-primary btn-lg rounded-pill p-3">
+          SIGN IN
+        </button>
+      </form>
+
+      <form
+        action="{# Add your admin login action URL here %#}"
+        class="form-toggle d-none"
+        method="POST"
+        id="adminForm"
+      >
+        <h1>ADMIN ACCOUNT</h1>
+        {% csrf_token %}
+        <input type="hidden" name="model" value="Admin" />
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          placeholder="Admin ID"
+          required
+          autofocus
+        />
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Password"
+          required
+        />
+        <a href="#">Forgot your password?</a>
+        <button type="submit" class="btn btn-primary btn-lg rounded-pill p-3">
+          SIGN IN
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

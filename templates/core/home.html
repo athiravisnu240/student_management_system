@@ -1,0 +1,29 @@
+{% extends "_base.html" %} {% load static %} {% block content %}
+
+<div class="d-flex flex-fill align-items-center justify-content-center">
+  <div class="row">
+    <div class="col">
+      <div class="card card-body shadow p-4 rounded-4">
+        <h2 class="text-dark">Welcome to Student Management System</h2>
+        <div class="d-flex align-item-center justify-content-center gap-3">
+          {% if user.is_authenticated %}
+          <a
+            class="btn btn-primary rounded-pill"
+            href="{% url 'accounts:logout' %}"
+            >Logout</a
+          >
+
+          {% else %}
+          <a
+            class="btn btn-primary rounded-pill"
+            href="{% url 'accounts:login' %}"
+            >Login page</a
+          >
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
