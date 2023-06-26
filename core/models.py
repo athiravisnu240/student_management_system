@@ -12,7 +12,6 @@ DAYS_CHOICES = [
 ]
 
 
-
 class TimeStampedModel(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -85,6 +84,9 @@ class Holiday(TimeStampedModel):
     date = models.DateField(primary_key=True)
     description = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"Period - {self.date}"
+
 
 class Timetable(TimeStampedModel):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -95,3 +97,5 @@ class Timetable(TimeStampedModel):
     class Meta:
         unique_together = ("division", "course", "day")
 
+    def __str__(self):
+        return f"{self.course} ({self.slot})"

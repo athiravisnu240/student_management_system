@@ -114,27 +114,21 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Date</th>
-                    <th>Course</th>
-                    <th>Period</th>
-                    <th>Present</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>No. of students</th>
+                    <th>Department</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for attendance in student.attendance_set.all %}
+                  {% for course in faculty.courses.all %}
                   <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{attendance.date | date}}</td>
-                    <td>{{student.course}}</td>
-                    <td>{{attendance.periods}}</td>
-                    <td>
-                      {% if attendance.present %}
-                      <span class="badge bg-success">Present</span>
-                      {% else %}
-                      <span class="badge bg-danger">Absent</span>
-                      {% endif %}
-                    </td>
+                    <td>{{course.code}}</td>
+                    <td>{{course.name}}</td>
+                    <td>{{course.student_set.count}}</td>
+                    <td>{{course.department}}</td>
                     <td>
                       <div class="d-flex align-items-center gap-3">
                         <a href="#" class="btn btn-primary">Edit</a>
@@ -318,6 +312,12 @@
             <h1 class="m-0">Holidays</h1>
           </div>
           <hr class="m-0" />
+        </div>
+
+        <!-- Content -->
+        <div class="d-flex flex-column flex-fill gap-3 p-3">
+          <!-- FullCalendar -->
+          <div class="calendar" data-calendar="{{ holidays|safe }}"></div>
         </div>
       </div>
     </div>

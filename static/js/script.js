@@ -26,8 +26,6 @@ navBtns.forEach((navBtn) => {
 const formToggleBtn = document.getElementById("formToggleBtn");
 const togglableForms = Array.from(document.querySelectorAll(".form-toggle"));
 
-console.log(togglableForms);
-
 const capitalizeFirstLetter = (str) =>
   `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 
@@ -50,8 +48,28 @@ const toggleForms = (forms) => {
   return forms[(nextFormIndex + 1) % forms.length];
 };
 
-formToggleBtn.addEventListener("click", (e) => {
-  const nextForm = toggleForms(togglableForms);
-  const formName = nextForm.getAttribute("id").replace("Form", "");
-  e.target.textContent = capitalizeFirstLetter(formName);
-});
+if (formToggleBtn && togglableForms.length > 0) {
+  formToggleBtn.addEventListener("click", (e) => {
+    const nextForm = toggleForms(togglableForms);
+    const formName = nextForm.getAttribute("id").replace("Form", "");
+    e.target.textContent = capitalizeFirstLetter(formName);
+  });
+}
+
+// Calendar
+window.onload = function () {
+  const calendars = document.querySelectorAll(".calendar");
+
+  calendars.forEach(function (calendarEl) {
+    var holidayDataAsString = calendarEl.getAttribute("data-calendar");
+    var holidayDataAsStringUpdated = holidayDataAsString.replace(/'/g, '"');
+    var holidayData = JSON.parse(holidayDataAsStringUpdated);
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      events: holidayData,
+    });
+
+    calendar.render();
+  });
+};

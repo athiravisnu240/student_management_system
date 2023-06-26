@@ -16,6 +16,8 @@ class HomeView(views.RedirectView):
                 url = reverse_lazy("student:dashboard", kwargs={"pk": user.student.id})
             elif hasattr(user, "faculty") and user.faculty is not None:
                 url = reverse_lazy("faculty:dashboard", kwargs={"pk": user.faculty.id})
+            elif user.is_superuser:
+                url = reverse_lazy("admin:index")
             else:
                 url = "/404"
         else:

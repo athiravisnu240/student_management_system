@@ -13,7 +13,9 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib import messages
+from accounts.models import Admin
 from faculty.models import Faculty
+from django.contrib.auth import get_user_model
 
 from student.models import Student
 
@@ -40,8 +42,14 @@ class LoginView(LoginView):
             faculty = Faculty.objects.filter(user=self.request.user)
             if faculty.exists():
                 success_url = reverse_lazy("faculty:dashboard", kwargs={"pk": faculty.first().pk})
+        elif model == "Admin":
+            user = self.request.user
+            if user.is_staff:
+                success_url = reverse_lazy("admin:index")
+            else:
+                success_url = reverse_lazy("handler401")
         else:
-            success_url = "/404/"
+            success_url = reverse_lazy("handler404")
         return success_url
 
 

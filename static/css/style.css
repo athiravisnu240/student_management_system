@@ -101,7 +101,6 @@ form {
   text-align: center;
 }
 
-
 .social-container {
   margin: 20px 0;
 }
@@ -302,4 +301,15 @@ form {
   60% {
     width: 450px;
   }
+}
+
+.custom-bg {
+  background: linear-gradient(to right, #5c95b8, #3aaf9f);
+}
+
+.calendar {
+  width: 100%;
+  max-height: 70vh;
+  overflow: hidden;
+  overflow-y: auto;
 }

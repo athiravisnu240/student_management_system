@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.models import Holiday
 
 from faculty.models import Faculty
 from student.models import Student
@@ -20,9 +21,15 @@ class DashboardView(LoginRequiredMixin, views.DetailView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         students = Student.objects.filter(department__faculty=self.get_object())
+        holidays = Holiday.objects.values("date", "description")
+        holiday_data = [
+            {"title": h["description"], "start": h["date"].strftime("%Y-%m-%d")}
+            for h in holidays
+        ]
         context.update(
             {
                 "students": students,
+                "holidays": holiday_data,
             }
         )
         return context
