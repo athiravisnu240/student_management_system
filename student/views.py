@@ -3,10 +3,14 @@
 # from django.http import HttpRequest, HttpResponse
 # from django.template import loader
 from typing import Any, Dict
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
+from student.forms import AttendanceForm
 
 from student.models import Attendance, Student
 
@@ -19,9 +23,49 @@ class DashboardView(LoginRequiredMixin, views.DetailView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         attendance = getattr(self.get_object(), "attendance_set", None)
-        
+
         context.update({})
         return context
+
+
+class AddAttendanceView(views.View):
+    model = Attendance
+    form_class = AttendanceForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        url = request.META.get("HTTP_REFERER")
+        if form.is_valid():
+            attendance = form.save()
+            messages.success(request, _("Attendance added successfully!"))
+        else:
+            messages.success(request, _("Can't add Attendance!"))
+
+        return redirect(url)
+
+
+class UpdateAttendanceView(LoginRequiredMixin, views.View):
+    model = Attendance
+    form_class = AttendanceForm
+
+    def get(self, request, *args, **kwargs):
+        attendance = Attendance.objects.get(pk=kwargs.get("pk"))
+        html = self.form_class(instance=attendance).as_table()
+        return HttpResponse(html)
+    
+    def post(self, request, *args, **kwargs):
+        attendance = Attendance.objects.get(pk=kwargs.get("pk"))
+        form = self.form_class(request.POST, instance=attendance)
+        if form.is_valid():
+            form.save()
+        return redirect(request.META.get("HTTP_REFERER"))
+    
+class DeleteAttendanceView(LoginRequiredMixin,views.View):
+    model = Attendance
+    def get(self, request, *args, **kwargs) -> str:
+        attendance = Attendance.objects.get(pk=kwargs.get("pk"))
+        attendance.delete()
+        return redirect(request.META.get("HTTP_REFERER"))
 
 
 # from login.models import (

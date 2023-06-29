@@ -1,5 +1,8 @@
+from django.core.exceptions import ValidationError
+from django.core.serializers import serialize
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from core.models import BaseUserModel, Course, Department, Division, TimeStampedModel
 
@@ -35,6 +38,24 @@ class Attendance(TimeStampedModel):
 
     def __str__(self):
         return f"{self.student} ({self.date})"
+
+    def get_json(self):
+        return serialize("json", [self])
+
+    class Meta:
+        unique_together = ("student", "date", "periods")
+
+    def clean(self):
+        super().clean()
+        if Attendance.objects.filter(
+            student=self.student,
+            date=self.date,
+            periods=self.periods,
+            presence=self.presence,
+        ).exists():
+            raise ValidationError(
+                _("Attendance for this student, date, and period already exists.")
+            )
 
 
 class Leave(TimeStampedModel):

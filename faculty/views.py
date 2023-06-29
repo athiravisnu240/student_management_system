@@ -10,7 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from core.models import Holiday
 
 from faculty.models import Faculty
-from student.models import Student
+from student.forms import AttendanceForm
+from student.models import Attendance, Student
 
 
 class DashboardView(LoginRequiredMixin, views.DetailView):
@@ -26,10 +27,13 @@ class DashboardView(LoginRequiredMixin, views.DetailView):
             {"title": h["description"], "start": h["date"].strftime("%Y-%m-%d")}
             for h in holidays
         ]
+        attendances = Attendance.objects.filter(student__in=students)
         context.update(
             {
                 "students": students,
                 "holidays": holiday_data,
+                "attendances": attendances,
+                "attendance_form": AttendanceForm,
             }
         )
         return context
