@@ -57,19 +57,21 @@ if (formToggleBtn && togglableForms.length > 0) {
 }
 
 // Calendar
-window.onload = function () {
-  const calendars = document.querySelectorAll(".calendar");
+// Function to show the FullCalendar
+function showFullCalendar() {
+  const calendarEl = document.querySelector(".calendar");
 
-  calendars.forEach(function (calendarEl) {
-    var holidayDataAsString = calendarEl.getAttribute("data-calendar");
-    var holidayDataAsStringUpdated = holidayDataAsString.replace(/'/g, '"');
-    var holidayData = JSON.parse(holidayDataAsStringUpdated);
+  var holidayDataAsString = calendarEl.getAttribute("data-calendar");
+  var holidayDataAsStringUpdated = holidayDataAsString.replace(/'/g, '"');
+  var holidayData = JSON.parse(holidayDataAsStringUpdated);
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      events: holidayData,
-    });
-
-    calendar.render();
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    events: holidayData,
   });
-};
+
+  calendar.render();
+}
+
+// Update FullCalendar on window resize
+window.addEventListener("resize", showFullCalendar);
